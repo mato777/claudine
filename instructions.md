@@ -58,7 +58,15 @@ If it prints "Add ~/.local/bin to your PATH", do that for the user's shell and o
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc   # or ~/.zshrc for zsh
 ```
 
-If `~/.tmux.conf` already existed, the script prints two lines (`set -g set-clipboard on`, `set -g bell-action any`). Show them to the user and ask before editing their file.
+If `~/.tmux.conf` already existed, the script prints one line to add: `source-file ~/.config/nvim/tmux.conf`.
+Ask the user before editing their file. With their yes, append it and reload tmux:
+
+```sh
+echo 'source-file ~/.config/nvim/tmux.conf' >> ~/.tmux.conf
+tmux source-file ~/.tmux.conf 2>/dev/null || true   # only if tmux is running
+```
+
+It sets only `set-clipboard on`, `bell-action any` and `escape-time 10`; it does not change the user's other tmux settings (e.g. `mouse`).
 
 ## 5. Verify
 
@@ -88,6 +96,15 @@ Tell the user to do these themselves:
    `ssh <host> -t 'tmux new -A -s work'`
 3. Open a project: `cd <project> && nvim`.
 4. In Warp on the Mac: Settings → Features → Keys → enable **Left Option key is Meta** (the Option shortcuts need it).
+
+## Updating an existing install
+
+```sh
+git -C ~/.config/nvim pull
+nvim --headless -c "lua vim.pack.update(nil, { target = 'lockfile', force = true })" -c 'qa'   # plugins to the lockfile's versions
+grep -qF 'source-file ~/.config/nvim/tmux.conf' ~/.tmux.conf || echo "ask the user to add: source-file ~/.config/nvim/tmux.conf"
+tmux source-file ~/.tmux.conf 2>/dev/null || true
+```
 
 ## Notes
 

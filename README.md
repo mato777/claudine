@@ -33,4 +33,6 @@ claude                                  # log in once
 
 Then every time: `ssh host -t 'tmux new -A -s work'`, `cd <project> && nvim`.
 
+tmux settings live in `tmux.conf` here; `~/.tmux.conf` loads them with `source-file ~/.config/nvim/tmux.conf`.
+
 Over SSH: the "needs you" sound is a terminal bell (Warp plays it on your Mac), copies go to your Mac's clipboard, and URLs/images from `Option+o` are copied instead of opened.

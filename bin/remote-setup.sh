@@ -71,19 +71,17 @@ else
   curl -fsSL https://claude.ai/install.sh | bash
 fi
 
-# tmux: pass copies (OSC 52) and the attention bell through to Warp on your Mac.
+# tmux: load claudine's tmux settings (clipboard, bell, escape-time) from the repo,
+# so they update with `git pull`.
+TMUX_LINE="source-file ~/.config/nvim/tmux.conf"
 if [ ! -e "$HOME/.tmux.conf" ]; then
   say "Writing ~/.tmux.conf"
-  cat > "$HOME/.tmux.conf" <<'TMUX'
-set -g set-clipboard on      # Neovim copies reach your Mac's clipboard
-set -g bell-action any       # Claude's "needs you" bell reaches Warp
-set -g escape-time 10        # snappy Esc / Option keys in Neovim
-set -g mouse on
-TMUX
+  printf '%s\n' "$TMUX_LINE" "set -g mouse on" > "$HOME/.tmux.conf"
+elif grep -qF "$TMUX_LINE" "$HOME/.tmux.conf"; then
+  say "~/.tmux.conf already loads claudine's tmux settings"
 else
-  say "~/.tmux.conf exists, left as is. For copy/bell to reach your Mac it needs:"
-  echo "  set -g set-clipboard on"
-  echo "  set -g bell-action any"
+  say "~/.tmux.conf exists, left as is. To get copy/bell through to your Mac, add this line:"
+  echo "  $TMUX_LINE"
 fi
 
 say "Installing Neovim plugins"
