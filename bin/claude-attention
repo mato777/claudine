@@ -1,0 +1,17 @@
+#!/bin/sh
+# Claude Code hook for sessions started from Neovim (settings: claude_attention.hooks_file()):
+# tells Neovim which session needs input, so it can ring and mark it in the sidebar.
+# Outside Neovim it just plays the sound.
+event="$1"
+payload=$(cat)
+sid=$(printf '%s' "$payload" | sed -n 's/.*"session_id" *: *"\([0-9a-fA-F-]*\)".*/\1/p' | head -n 1)
+ntype=$(printf '%s' "$payload" | sed -n 's/.*"notification_type" *: *"\([a-z_]*\)".*/\1/p' | head -n 1)
+nvim_bin="${NVIM_BIN:-nvim}"
+if [ -n "$NVIM" ] && command -v "$nvim_bin" >/dev/null 2>&1; then
+  "$nvim_bin" --server "$NVIM" --remote-expr "v:lua.require'claude_attention'.ping('$event','$sid','$ntype')" >/dev/null 2>&1 &
+elif command -v afplay >/dev/null 2>&1; then
+  afplay /System/Library/Sounds/Glass.aiff >/dev/null 2>&1 &
+else
+  printf '\a' > /dev/tty 2>/dev/null
+fi
+exit 0

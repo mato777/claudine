@@ -1,0 +1,32 @@
+{
+  "plugins": {
+    "claudecode.nvim": {
+      "rev": "af04fbf9c27c5c06b4d1ff022b551aa94e1df4aa",
+      "src": "https://github.com/coder/claudecode.nvim"
+    },
+    "nvim-tree.lua": {
+      "rev": "7e1da84aaffb413e1fa47b3895e5caa12501142d",
+      "src": "https://github.com/nvim-tree/nvim-tree.lua"
+    },
+    "plenary.nvim": {
+      "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
+      "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
+    "render-markdown.nvim": {
+      "rev": "8e8795368391036643b622875a6da6a51bcd33f4",
+      "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
+    },
+    "snacks.nvim": {
+      "rev": "882c996cf28183f4d63640de0b4c02ec886d01f2",
+      "src": "https://github.com/folke/snacks.nvim"
+    },
+    "telescope.nvim": {
+      "rev": "40aedd8a68c78a656a10a8d62d80c54af59420fb",
+      "src": "https://github.com/nvim-telescope/telescope.nvim"
+    },
+    "tokyonight.nvim": {
+      "rev": "cdc07ac78467a233fd62c493de29a17e0cf2b2b6",
+      "src": "https://github.com/folke/tokyonight.nvim"
+    }
+  }
+}
